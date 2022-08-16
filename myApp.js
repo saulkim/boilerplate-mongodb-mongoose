@@ -29,21 +29,21 @@ const createAndSavePerson = (done) => {
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-	Person.create(arrayOfPeople, (err, data)=>{
-	    if(err){
-		return console.log(err);
-	    } else {
-		// fcc test
-	//	done(null, data);
-	    }
-	})
+    Person.create(arrayOfPeople, (err, data)=>{
+	if(err){
+	    return console.log(err);
+	} else {
+	    // fcc test
+	    //	done(null, data);
+	}
+    })
 };
 
 const findPeopleByName = (personName, done) => {
     Person.find({name: personName}, (err, data)=>{
 	if(err){return console.log(err)}
 	else {
-	  //  done(null, data);
+	    //  done(null, data);
 	}
     })
 };
@@ -52,7 +52,7 @@ const findOneByFood = (food, done) => {
     Person.findOne({favoriteFood: food}, (err, data)=>{
 	if(err){return console.log(err)}
 	else {return
-	     // done(null, data);
+	      // done(null, data);
 	     }
     });
 };
@@ -102,22 +102,27 @@ const removeById = (personId, done) => {
 const removeManyPeople = (done) => {
     const nameToRemove = "Mary";
     Person.deleteMany({name: nameToRemove}, (err, data) => {
-	if(err){return done(err);}
-	else {
-	    return done(null, data);
-	}
+	if(err) return console.log(err);
+	done(null, data);
     })
 
 };
 
 const queryChain = (done) => {
-  const foodToSearch = "burrito";
-
+    const foodToSearch = "burrito";
+    let findQuery = Person.find({favoriteFoods: foodToSearch})
+    .sort({name: 1})
+    .limit(2)
+    .select({name: 1, age: 0})
+	.exec((err, data) => {
+	    done(null, data);
+	});
+    
 };
 
 /** **Well Done !!**
-/* You completed these challenges, let's go celebrate !
- */
+    /* You completed these challenges, let's go celebrate !
+*/
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
